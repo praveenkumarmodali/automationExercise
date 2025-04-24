@@ -1,9 +1,15 @@
 package tests;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Properties;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import abstractComponents.utils;
@@ -12,8 +18,8 @@ import testComponents.BaseTest;
 
 public class StandAloneTest extends BaseTest {
 	
-	@Test
-	public void registerUser() {
+	@Test(dataProvider="signUpDataProvider")
+	public void registerUser(HashMap<String,String> input) {
 		utils utils = new utils(driver);
 		
 		// Assert that the Home page is Loaded
@@ -27,34 +33,16 @@ public class StandAloneTest extends BaseTest {
 		signupPage.verifyNewUserFormVisible();
 		
 		//give name and email address
-		signupPage.enter_Name_and_Email("praveen", "modalipraveen@gmail.com");
 		
-		
+		signupPage.enter_Name_and_Email(input.get("name"), input.get("email"));
 		
 //		verify that Enter account information is visible 
-		WebElement accountInformationText = driver.findElement(By.xpath("//b[text()='Enter Account Information']"));
-		utils.waitUntilWebElementLocated(accountInformationText);
-		Assert.assertTrue(accountInformationText.isDisplayed());
+		signupPage.verifyAccountInformation();
 		
 		//fill details
-		By maleCheckbox = By.id("id_gender1");
-		driver.findElement(maleCheckbox).click();
+		signupPage.fillAccountDetails(input.get("password"), 
+				input.get("date"), input.get("month"), input.get("year")); //password, date, month , year
 		
-		WebElement password = driver.findElement(By.id("password"));
-		password.sendKeys("modalipraveen");
-		
-		WebElement daysDropdown = driver.findElement(By.id("days"));
-		WebElement monthDropdown = driver.findElement(By.id("months"));
-		WebElement yearDropdown = driver.findElement(By.id("years"));
-		
-		Select dayselect = new Select(daysDropdown);
-		dayselect.selectByValue("28");
-		
-		Select monthselect = new Select(monthDropdown);
-		monthselect.selectByValue("11");
-		
-		Select yearselect = new Select(yearDropdown);
-		yearselect.selectByValue("2000");
 		
 //		select news letter and special offers
 		driver.findElement(By.id("newsletter")).click();
@@ -100,6 +88,27 @@ public class StandAloneTest extends BaseTest {
 //		click on continue button
 		driver.findElement(By.xpath("//a[text()='Continue']")).click();
 		
+	}
+	
+	@DataProvider
+	public Object[] signUpDataProvider() throws IOException {
+		String path = "/Users/praveenkumar/eclipse-workspace7/"
+				+ "Automation/src/test/java/resources/globalproperties.properties";
+		Properties props = new Properties();
+		FileInputStream fs = new FileInputStream(path);
+		props.load(fs);
+		
+		String email = "modalikumar" + System.currentTimeMillis()+ "@gmail.com";
+		
+		HashMap<String, String> map1 = new HashMap<>();
+		map1.put("name", "praveen");
+		map1.put("email", email);
+		map1.put("password", props.getProperty("password"));
+		map1.put("date", "28");
+		map1.put("month", "11");
+		map1.put("year", "2000");
+		
+		return new Object[] {map1};
 	}
 
 
