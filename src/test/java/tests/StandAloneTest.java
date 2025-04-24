@@ -68,6 +68,8 @@ public class StandAloneTest extends BaseTest {
 		driver.findElement(By.id("newsletter")).click();
 		driver.findElement(By.id("optin")).click();
 		
+		System.out.println("quit");
+		
 		
 	}
 

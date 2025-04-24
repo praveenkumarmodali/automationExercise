@@ -64,8 +64,12 @@ public class RegisterUserScenario extends BaseTest {
 		Select yearselect = new Select(yearDropdown);
 		yearselect.selectByValue("2000");
 		
+//		select news letter and special offers
 		driver.findElement(By.id("newsletter")).click();
 		driver.findElement(By.id("optin")).click();
+		
+		
+		System.out.println("quit");
 		
 		
 	}
