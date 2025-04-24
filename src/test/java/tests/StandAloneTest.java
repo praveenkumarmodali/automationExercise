@@ -7,6 +7,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import abstractComponents.utils;
+import pages.SignUpPage;
 import testComponents.BaseTest;
 
 public class StandAloneTest extends BaseTest {
@@ -15,28 +16,19 @@ public class StandAloneTest extends BaseTest {
 	public void registerUser() {
 		utils utils = new utils(driver);
 		
-		
 		// Assert that the Home page is Loaded
-		utils.waitUntilElementLocated(By.cssSelector("[src*='logo']"));
-		WebElement homePageLogo = driver.findElement(By.cssSelector("[src*='logo']"));
-		Assert.assertTrue(homePageLogo.isDisplayed());
-		
+		SignUpPage signupPage = new SignUpPage(driver);
+		signupPage.verifyHomePageLoaded();
+
 		//click on sign up/login button
-		driver.findElement(By.cssSelector("[href*='login']")).click();
+		signupPage.goToSignUp();
 		
 		//verify new user form is visible 
-		WebElement signupForm = driver.findElement(By.cssSelector(".signup-form h2"));
-		utils.waitUntilWebElementLocated(signupForm);
-		Assert.assertTrue(signupForm.isDisplayed());
+		signupPage.verifyNewUserFormVisible();
 		
 		//give name and email address
-		WebElement name = driver.findElement(By.cssSelector("[name='name']"));
-		WebElement email = driver.findElement(By.xpath("//div[@class='signup-form']//input[@name='email']"));
-		WebElement signupBtn = driver.findElement(By.xpath("//button[text()='Signup']"));
+		signupPage.enter_Name_and_Email("praveen", "modalipraveen@gmail.com");
 		
-		name.sendKeys("praveen");
-		email.sendKeys("modalipraveen@gmail.com");
-		signupBtn.click();
 		
 		
 //		verify that Enter account information is visible 
@@ -68,8 +60,45 @@ public class StandAloneTest extends BaseTest {
 		driver.findElement(By.id("newsletter")).click();
 		driver.findElement(By.id("optin")).click();
 		
-		System.out.println("quit");
+//		fill additional details 
+		driver.findElement(By.id("first_name")).sendKeys("Praveen");
+		driver.findElement(By.id("last_name")).sendKeys("kumar");
+		driver.findElement(By.id("company")).sendKeys("mecitlabs");
+		driver.findElement(By.id("address1")).sendKeys("Hyd");
+		driver.findElement(By.id("address2")).sendKeys("Gudimalkapur");
+		WebElement countryDropdown = driver.findElement(By.id("country"));
+		Select countrySelect = new Select(countryDropdown);
+		countrySelect.selectByValue("India");
+		driver.findElement(By.id("state")).sendKeys("Telangana");
+		driver.findElement(By.id("city")).sendKeys("Hyderabad");
+		driver.findElement(By.id("zipcode")).sendKeys("500028");
+		driver.findElement(By.id("mobile_number")).sendKeys("12345678");
 		
+//		click on create account
+		driver.findElement(By.xpath("//button[text()='Create Account']")).click();
+		
+		//verify account created
+		String accountCreatedText = driver.findElement(By.xpath("//b[text()='Account Created!']")).getText();
+		Assert.assertEquals(accountCreatedText, "ACCOUNT CREATED!");
+		
+		//click on continue 
+		driver.findElement(By.xpath("//a[text()='Continue']")).click();
+		
+//		verify the logged in user
+		WebElement loggedInUserText = driver.findElement(By.xpath("//a[text()=' Logged in as ']"));
+		utils.waitUntilWebElementLocated(loggedInUserText);
+		Assert.assertTrue(loggedInUserText.isDisplayed());
+		
+//		click on delete account
+		driver.findElement(By.cssSelector("[href*='delete_account']")).click();
+		
+//		verify account delete text
+		WebElement deleteAccountText = driver.findElement(By.xpath("//b[text()='Account Deleted!']"));
+		utils.waitUntilWebElementLocated(deleteAccountText);
+		Assert.assertTrue(deleteAccountText.isDisplayed());
+		
+//		click on continue button
+		driver.findElement(By.xpath("//a[text()='Continue']")).click();
 		
 	}
 
