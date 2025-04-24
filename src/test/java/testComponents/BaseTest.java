@@ -7,6 +7,7 @@ import java.util.Properties;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -30,6 +31,10 @@ public class BaseTest {
 		
 		if(browserName.equalsIgnoreCase("safari")) {
 			driver = new SafariDriver();
+		}
+		
+		if(browserName.equalsIgnoreCase("firefox")) {
+			driver=new FirefoxDriver();
 		}
 		
 		driver.manage().window().maximize();

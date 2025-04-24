@@ -31,8 +31,29 @@ public class utils {
 	@FindBy(css="[href*='login']")
 	WebElement signUpButton;
 	
+	@FindBy(xpath="//button[text()='Create Account']")
+	WebElement createAccountBtn;
+	
+	@FindBy(xpath="//a[text()='Continue']")
+	WebElement continueBtn;
+	
+	@FindBy(css="[href*='delete_account']")
+	WebElement deleteAccBtn;
+	
 	public void goToSignUp() {
 		signUpButton.click();
+	}
+	
+	public void click_createAccount() {
+		createAccountBtn.click();
+	}
+	
+	public void click_continueBtn() {
+		continueBtn.click();
+	}
+	
+	public void click_delete_account_btn() {
+		deleteAccBtn.click();
 	}
 
 }

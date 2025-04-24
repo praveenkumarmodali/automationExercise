@@ -6,7 +6,7 @@
       <class name="tests.StandAloneTest">
         <methods>
           <include name="launchApplication"/>
-          <include name="registerUser"/>
+          <include name="registerUser" invocation-numbers="0"/>
           <include name="tearDown"/>
         </methods>
       </class> <!-- tests.StandAloneTest -->
