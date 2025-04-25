@@ -114,7 +114,6 @@ public class SignUpPage extends utils {
 		driver.findElement(add1).sendKeys(address1);
 		driver.findElement(add2).sendKeys(address2);
 		
-		
 	}
 	
 	public void select_country_state_city(String country, String state, String city, String pincode,String mNumber) {

@@ -24,9 +24,17 @@ public class LoginPage extends utils {
 	@FindBy(css="[src*='logo']")
 	WebElement hopePageLogo;
 	
+	@FindBy(css=".login-form h2")
+	WebElement loginForm;
+	
 	public void verifyHomePageLoaded() {
 		waitUntilElementLocated(logo);
 		Assert.assertTrue(hopePageLogo.isDisplayed());
+	}
+	
+	public void verify_login_form_displayed() {
+		waitUntilWebElementLocated(loginForm);
+		Assert.assertTrue(loginForm.isDisplayed());
 	}
 
 }
