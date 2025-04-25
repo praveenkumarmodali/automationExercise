@@ -44,6 +44,10 @@ public class utils {
 		signUpButton.click();
 	}
 	
+	public void goToLogin() {
+		signUpButton.click();
+	}
+	
 	public void click_createAccount() {
 		createAccountBtn.click();
 	}
