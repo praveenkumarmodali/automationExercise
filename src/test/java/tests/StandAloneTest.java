@@ -82,6 +82,8 @@ public class StandAloneTest extends BaseTest {
 		//verify login page form is displayed 
 		loginPage.verify_login_form_displayed();
 		
+		System.out.println("new");
+		
 	}
 
 }
